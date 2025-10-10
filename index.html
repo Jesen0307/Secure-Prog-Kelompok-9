@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CyberTutor — Edukasi Cybersecurity untuk Semua</title>
+  <meta name="description" content="CyberTutor: kelas singkat & interaktif untuk mengurangi korban phishing, scam, dan pencurian data. Belajar praktis, dapat voucher."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent1: #6EE7B7; /* mint */
+      --accent2: #7C5CFF; /* purple */
+      --muted: #94a3b8;
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --radius: 14px;
+      --max-width: 1100px;
+      --shadow: 0 8px 30px rgba(2,6,23,0.7);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg,#071029 0%, #071430 60%), var(--bg);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max-width);margin:0 auto;padding:2rem;}
+    header{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:52px;height:52px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent2),var(--accent1));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#04212a;
+      box-shadow:0 6px 18px rgba(124,92,255,0.18);
+      font-family:monospace;
+    }
+    nav{display:flex;gap:16px;align-items:center}
+    nav a{color:var(--muted);font-weight:600}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      color:#04212a;font-weight:700;border:none;cursor:pointer;
+      box-shadow:var(--shadow);
+    }
+    /* Hero */
+    .hero{
+      display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:2rem 0;
+    }
+    @media(max-width:960px){ .hero{grid-template-columns:1fr;}}
+    .hero h1{font-size:2.1rem;margin:0 0 0.6rem 0;line-height:1.05}
+    .hero p{color:var(--muted);margin:0 0 1rem}
+    .feature-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .chip{background:var(--glass);padding:8px 12px;border-radius:999px;color:var(--accent1);font-weight:600;font-size:0.9rem}
+    /* Card */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);padding:18px;border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    }
+    .small{font-size:0.9rem;color:var(--muted)}
+    /* Stats */
+    .stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .stat{background:var(--glass-2);padding:12px;border-radius:10px;min-width:120px}
+    .stat h3{margin:0;font-size:1.15rem}
+    .stat p{margin:6px 0 0 0;color:var(--muted);font-size:0.9rem}
+    /* TAM SAM SOM bars */
+    .market-bars{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+    .bar{height:16px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0;transition:width 900ms ease}
+    .bar-label{display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;color:var(--muted)}
+    /* Features grid */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:2rem 0}
+    @media(max-width:960px){.features{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.features{grid-template-columns:1fr}}
+    .feature{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));}
+    .feature h4{margin:0 0 6px 0}
+    .tutors{display:flex;gap:12px;flex-wrap:wrap}
+    .tutor{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:var(--glass);min-width:220px}
+    .avatar{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#fff2 0%, #fff0 100%);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent2)}
+    /* Pricing */
+    .pricing{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap}
+    .plan{flex:1;min-width:200px;border-radius:12px;padding:16px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));}
+    .plan .price{font-size:1.5rem;font-weight:800;color:var(--accent1)}
+    /* footer */
+    footer{margin-top:36px;border-top:1px solid rgba(255,255,255,0.03);padding-top:18px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
+    .modal{width:100%;max-width:520px;background:linear-gradient(180deg,#071127,#05111b);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    label{display:block;font-size:0.9rem;margin:8px 0 6px 0;color:var(--muted)}
+    input[type="text"],input[type="email"],select,textarea{
+      width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;
+    }
+    .row{display:flex;gap:10px}
+    .row .col{flex:1}
+    .tiny{font-size:0.85rem;color:var(--muted)}
+    /* micro-animations */
+    .sparkle{position:relative;overflow:hidden}
+    .hero-illustr{border-radius:14px;padding:18px;background:linear-gradient(135deg, rgba(124,92,255,0.12), rgba(110,231,183,0.06));}
+    .cta-row{display:flex;gap:10px;align-items:center;margin-top:16px}
+    /* accessibility focus */
+    a:focus,button:focus,input:focus{outline:3px solid rgba(124,92,255,0.12);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">CT</div>
+        <div>
+          <div style="font-weight:800">CyberTutor</div>
+          <div class="tiny" style="margin-top:2px">Edukasi keamanan digital untuk semua</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#market">Market</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+        <button class="btn" id="openSignup">Daftar Kelas</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div>
+        <h1 id="hero-heading">Belajar keamanan digital yang praktis, singkat, dan menyenangkan</h1>
+        <p>CyberTutor mengajarkan langkah-langkah sederhana untuk lindungi diri dari phishing, penipuan WhatsApp, dan pencurian data — tanpa jargon teknis.</p>
+
+        <div class="feature-chips" role="list">
+          <span class="chip" role="listitem">Kelas 15–30 menit</span>
+          <span class="chip" role="listitem">Bahasa awam</span>
+          <span class="chip" role="listitem">Poin → Voucher</span>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn" id="openSignup2">Mulai Sekarang</button>
+          <a href="#market" class="tiny" style="align-self:center;color:var(--muted)">Lihat market size</a>
+        </div>
+
+        <div class="stats" aria-hidden="true">
+          <div class="stat card">
+            <h3>~220M</h3>
+            <p>Pengguna Internet Indonesia (estimasi 2025)</p>
+          </div>
+          <div class="stat card">
+            <h3>~88M</h3>
+            <p>Pengguna edukasi online (potensial)</p>
+          </div>
+          <div class="stat card">
+            <h3>1% target</h3>
+            <p>Target awal pengguna (SOM)</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-illustr card" aria-hidden="true">
+        <!-- Simple illustrative panel: quick quiz -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-weight:700">Mini-Quiz: Kenali Phishing</div>
+          <div class="tiny">2 soal • 1 menit</div>
+        </div>
+
+        <div id="quiz" style="background:rgba(255,255,255,0.02);padding:12px;border-radius:10px">
+          <div id="q1" class="question">
+            <div class="tiny" style="margin-bottom:6px">Apa ciri link phishing?</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-quiz" data-correct="false">Ada emoji di URL</button>
+              <button class="btn-quiz" data-correct="true">Domain aneh & banyak tanda</button>
+              <button class="btn-quiz" data-correct="false">Icon website</button>
+            </div>
+          </div>
+          <div id="q2" class="question" style="display:none;margin-top:10px">
+            <div class="tiny" style="margin-bottom:6px">Email meminta password? Apa tindakan yang benar?</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-quiz" data-correct="true">Jangan balas, verifikasi via situs resmi</button>
+              <button class="btn-quiz" data-correct="false">Kirimkan password agar cepat</button>
+              <button class="btn-quiz" data-correct="false">Klik link untuk cek</button>
+            </div>
+          </div>
+          <div id="quiz-result" style="display:none;margin-top:12px">
+            <div style="font-weight:700">Hasil: <span id="score">0</span>/2</div>
+            <div class="tiny">Benar = dapat poin yang bisa ditukar voucher</div>
+            <button class="btn" id="quiz-restart" style="margin-top:8px">Coba Lagi</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="margin:0">Apa yang kami tawarkan</h2>
+        <div class="tiny">Praktis • Ringkas • Bisa langsung dipraktikkan</div>
+      </div>
+
+      <div class="features" role="list">
+        <div class="feature card" role="listitem">
+          <h4>Micro-classes</h4>
+          <p class="small">Kelas 15–30 menit fokus ke tindakan nyata (contoh: amankan WhatsApp, kenali link palsu).</p>
+        </div>
+        <div class="feature card" role="listitem">
+          <h4>Gamified Learning</h4>
+          <p class="small">Selesaikan quiz, kumpulkan poin, tukar voucher dengan merchant partner.</p>
+        </div>
+        <div class="feature card" role="listitem">
+          <h4>Community Sharing</h4>
+          <p class="small">Forum untuk berbagi pengalaman scam dan tips praktis dari pengguna lain.</p>
+        </div>
+        <div class="feature card" role="listitem">
+          <h4>Tutor Praktis</h4>
+          <p class="small">Tutor dari praktisi keamanan yang menjelaskan tanpa jargon teknis.</p>
+        </div>
+        <div class="feature card" role="listitem">
+          <h4>Pay-per-class</h4>
+          <p class="small">Bayar hanya untuk kelas yang diambil — tanpa komitmen bulanan.</p>
+        </div>
+        <div class="feature card" role="listitem">
+          <h4>Lightweight Tech</h4>
+          <p class="small">Aplikasi web cepat, dapat diakses lewat HP atau desktop.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKET (TAM SAM SOM) -->
+    <section id="market" style="margin-top:12px">
+      <h2>Market Size — TAM / SAM / SOM</h2>
+      <p class="small" style="max-width:760px">
+        Estimasi awal untuk presentasi tugas. Angka ini contoh — silakan ganti dengan data sumber yang kamu punya (Kominfo, OJK, laporan industri).
+      </p>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+        <div class="card" style="flex:1;min-width:280px">
+          <div class="tiny">TAM — Total Addressable Market</div>
+          <div style="font-weight:800;font-size:1.4rem">220,000,000 <span class="small">pengguna internet (ID)</span></div>
+          <div style="margin-top:8px" class="small">Seluruh populasi pengguna internet di Indonesia (estimasi).</div>
+        </div>
+
+        <div class="card" style="flex:1;min-width:280px">
+          <div class="tiny">SAM — Serviceable Available Market</div>
+          <div style="font-weight:800;font-size:1.4rem">88,000,000 <span class="small">pengguna edukasi online</span></div>
+          <div style="margin-top:8px" class="small">Pengguna yang cenderung konsumsi kursus & kelas online.</div>
+        </div>
+
+        <div class="card" style="flex:1;min-width:280px">
+          <div class="tiny">SOM — Serviceable Obtainable Market</div>
+          <div style="font-weight:800;font-size:1.4rem">880,000 <span class="small">target awal 1%</span></div>
+          <div style="margin-top:8px" class="small">Target realistis pengguna di tahun pertama (1% dari SAM).</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="card">
+        <div class="bar-label"><span>TAM</span><span id="tamVal">100%</span></div>
+        <div class="bar"><i id="tamBar" style="width:100%"></i></div>
+
+        <div class="bar-label" style="margin-top:8px"><span>SAM</span><span id="samVal">40%</span></div>
+        <div class="bar"><i id="samBar" style="width:40%"></i></div>
+
+        <div class="bar-label" style="margin-top:8px"><span>SOM</span><span id="somVal">1%</span></div>
+        <div class="bar"><i id="somBar" style="width:1%"></i></div>
+
+        <div class="tiny" style="margin-top:10px">Tip: ubah persentase di atribut data- pada elemen JS untuk menyesuaikan perhitunganmu.</div>
+      </div>
+    </section>
+
+    <!-- Tutors & Pricing -->
+    <section style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:320px">
+        <h3>Tutor Kami</h3>
+        <p class="small">Praktisi yang berpengalaman menjelaskan dengan bahasa awam.</p>
+        <div class="tutors">
+          <div class="tutor card">
+             <img src="dino-furry.png" alt="Tutor Dino Furry 9000" 
+                style="width:48px;height:48px;border-radius:10px;object-fit:cover;" />
+              <div>
+            <div style="font-weight:700">Dino Furry 9000</div>
+           <div class="tiny">Tutor Gamifikasi • Membuat belajar jadi fun & interaktif</div>
+          </div>
+        </div>
+
+          <div class="tutor card">
+            <div class="avatar">LN</div>
+            <div>
+              <div style="font-weight:700">Lina N.</div>
+              <div class="tiny">Trainer digital safety untuk masyarakat</div>
+            </div>
+          </div>
+          <div class="tutor card">
+            <div class="avatar">DS</div>
+            <div>
+              <div style="font-weight:700">Dimas S.</div>
+              <div class="tiny">Praktisi SOC • Simulasi serangan & pencegahan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:320px">
+        <h3 id="pricing">Pricing</h3>
+        <div class="pricing">
+          <div class="plan card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><strong>Basic</strong><div class="tiny">Kelas tunggal</div></div>
+              <div class="price">Rp25k</div>
+            </div>
+            <ul class="small" style="margin-top:10px;padding-left:16px">
+              <li>Kelas 15–20 menit</li>
+              <li>1 mini-quiz</li>
+              <li>Poin 10 (tukar voucher)</li>
+            </ul>
+            <div style="margin-top:8px"><button class="btn" onclick="openSignupModal('Basic')">Beli Sekarang</button></div>
+          </div>
+
+          <div class="plan card" style="border:2px solid rgba(124,92,255,0.12)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><strong>Pro</strong><div class="tiny">Paket 5 kelas</div></div>
+              <div class="price">Rp90k</div>
+            </div>
+            <ul class="small" style="margin-top:10px;padding-left:16px">
+              <li>5 kelas topik berbeda</li>
+              <li>Access komunitas</li>
+              <li>Poin 60 + bonus voucher</li>
+            </ul>
+            <div style="margin-top:8px"><button class="btn" onclick="openSignupModal('Pro')">Beli Paket</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & footer -->
+    <footer id="contact">
+      <div>
+        <div style="font-weight:700">CyberTutor</div>
+        <div class="tiny">Alamat kantor (contoh): Jl. Contoh No.1, Jakarta</div>
+        <div class="tiny">Email: hello@cybertutor.id</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="tiny">Follow us</div>
+        <div style="display:flex;gap:6px">
+          <a class="tiny" href="#" aria-label="Twitter">Twitter</a>
+          <a class="tiny" href="#" aria-label="Instagram">Instagram</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SIGNUP MODAL -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal card" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:800">Daftar Kelas</div>
+          <div class="tiny" id="selectedPlan">Pilih kelas</div>
+        </div>
+        <button id="closeModal" aria-label="Close" style="background:transparent;border:none;color:var(--muted);font-weight:700;cursor:pointer">✕</button>
+      </div>
+
+      <form id="signupForm" style="margin-top:12px">
+        <label for="fullname">Nama lengkap</label>
+        <input id="fullname" name="fullname" type="text" required placeholder="Contoh: Dita S." />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="email@domain.com" />
+
+        <label for="kelas">Pilih kelas</label>
+        <select id="kelas" name="kelas">
+          <option>Kenali Phishing — 15 menit</option>
+          <option>Lindungi WhatsApp — 20 menit</option>
+          <option>Keamanan Sosial Media — 15 menit</option>
+        </select>
+
+        <div style="display:flex;justify-content:space-between;gap:10px;margin-top:12px">
+          <button type="submit" class="btn">Bayar & Daftar</button>
+          <button type="button" id="cancelModal" style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;color:var(--muted)">Batal</button>
+        </div>
+        <div class="tiny" style="margin-top:10px">* Ini demo front-end — integrasikan pembayaran (Midtrans, Xendit, dll) saat implementasi.</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Modal logic ----------
+    const modal = document.getElementById('modal');
+    const openBtns = [document.getElementById('openSignup'), document.getElementById('openSignup2')];
+    const closeModalBtn = document.getElementById('closeModal');
+    const cancelModalBtn = document.getElementById('cancelModal');
+    const selectedPlan = document.getElementById('selectedPlan');
+
+    openBtns.forEach(b => b.addEventListener('click', () => {
+      selectedPlan.textContent = 'Pilih kelas';
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }));
+
+    function openSignupModal(plan){
+      selectedPlan.textContent = plan;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }
+    window.openSignupModal = openSignupModal;
+
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    }
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal() });
+
+    document.getElementById('signupForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // Demo behavior: show success then close
+      alert('Terima kasih! Link kelas akan dikirim ke email (demo).');
+      closeModal();
+    });
+
+    // ---------- TAM/SAM/SOM bars: animate in ----------
+    const tamBar = document.getElementById('tamBar');
+    const samBar = document.getElementById('samBar');
+    const somBar = document.getElementById('somBar');
+    const tamVal = document.getElementById('tamVal');
+    const samVal = document.getElementById('samVal');
+    const somVal = document.getElementById('somVal');
+
+    // Data attributes: change numbers here to reflect real calculations
+    const data = {
+      tamPct: 100,
+      samPct: 40,
+      somPct: 1
+    };
+
+    // animate after load
+    window.addEventListener('load', ()=>{
+      setTimeout(()=>{
+        tamBar.style.width = data.tamPct + '%';
+        samBar.style.width = data.samPct + '%';
+        somBar.style.width = data.somPct + '%';
+        tamVal.textContent = data.tamPct + '%';
+        samVal.textContent = data.samPct + '%';
+        somVal.textContent = data.somPct + '%';
+      }, 250);
+    });
+
+    // ---------- Mini quiz logic ----------
+    const quizButtons = document.querySelectorAll('.btn-quiz');
+    let currentQuestion = 1;
+    let score = 0;
+
+    quizButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const correct = btn.getAttribute('data-correct') === 'true';
+        btn.disabled = true;
+        if(correct){
+          btn.style.transform='translateY(-2px)';
+          score++;
+        } else {
+          btn.style.opacity = '0.6';
+        }
+
+        // move to next question or reveal result
+        const q1 = document.getElementById('q1');
+        const q2 = document.getElementById('q2');
+        const result = document.getElementById('quiz-result');
+        const scoreEl = document.getElementById('score');
+
+        setTimeout(()=> {
+          if(currentQuestion === 1){
+            q1.style.display = 'none';
+            q2.style.display = 'block';
+            currentQuestion = 2;
+          } else {
+            q2.style.display = 'none';
+            scoreEl.textContent = score;
+            result.style.display = 'block';
+          }
+        }, 600);
+      });
+    });
+
+    document.getElementById('quiz-restart').addEventListener('click', ()=>{
+      // reset
+      score = 0; currentQuestion = 1;
+      document.getElementById('q1').style.display = 'block';
+      document.getElementById('q2').style.display = 'none';
+      document.getElementById('quiz-result').style.display = 'none';
+      document.querySelectorAll('.btn-quiz').forEach(b => { b.disabled = false; b.style.opacity = '1'; b.style.transform='none' });
+    });
+
+    // keyboard accessibility for modal: close with Esc
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeModal();
+    });
+
+    // small helper: prebind second signup trigger
+    document.getElementById('openSignup2').addEventListener('click', ()=>{ openSignupModal('Basic') });
+
+  </script>
+</body>
+</html>
