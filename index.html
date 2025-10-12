@@ -1,506 +1,619 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CyberTutor — Edukasi Cybersecurity untuk Semua</title>
-  <meta name="description" content="CyberTutor: kelas singkat & interaktif untuk mengurangi korban phishing, scam, dan pencurian data. Belajar praktis, dapat voucher."/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <title>AutoParts — Car Spare Parts Store</title>
+  <meta name="description" content="AutoParts - online shop for car spare parts. Filter by make, model, and year. Shop parts for cars only." />
   <style>
     :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent1: #6EE7B7; /* mint */
-      --accent2: #7C5CFF; /* purple */
-      --muted: #94a3b8;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --radius: 14px;
-      --max-width: 1100px;
-      --shadow: 0 8px 30px rgba(2,6,23,0.7);
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --accent:#2b6ef6;
+      --muted:#6b7280;
+      --radius:12px;
+      --max-width:1200px;
+      --shadow: 0 8px 30px rgba(17,24,39,0.06);
+      --success:#10b981;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background: linear-gradient(180deg,#071029 0%, #071430 60%), var(--bg);
-      color: #e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
+      margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg) 0%, #eef2ff 100%);color:#0f172a;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      padding:24px;
     }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:var(--max-width);margin:0 auto;padding:2rem;}
-    header{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:52px;height:52px;border-radius:12px;
-      background:linear-gradient(135deg,var(--accent2),var(--accent1));
-      display:flex;align-items:center;justify-content:center;font-weight:800;color:#04212a;
-      box-shadow:0 6px 18px rgba(124,92,255,0.18);
-      font-family:monospace;
-    }
-    nav{display:flex;gap:16px;align-items:center}
-    nav a{color:var(--muted);font-weight:600}
-    .btn{
-      display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;
-      background:linear-gradient(90deg,var(--accent2),var(--accent1));
-      color:#04212a;font-weight:700;border:none;cursor:pointer;
-      box-shadow:var(--shadow);
-    }
-    /* Hero */
-    .hero{
-      display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:2rem 0;
-    }
-    @media(max-width:960px){ .hero{grid-template-columns:1fr;}}
-    .hero h1{font-size:2.1rem;margin:0 0 0.6rem 0;line-height:1.05}
-    .hero p{color:var(--muted);margin:0 0 1rem}
-    .feature-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .chip{background:var(--glass);padding:8px 12px;border-radius:999px;color:var(--accent1);font-weight:600;font-size:0.9rem}
-    /* Card */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:var(--radius);padding:18px;border:1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
-    }
+    .wrap{max-width:var(--max-width);margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;box-shadow:var(--shadow)}
+    h1{font-size:1.25rem;margin:0}
+    .searchbar{display:flex;gap:8px;align-items:center}
+    input[type="search"]{padding:10px 12px;border-radius:10px;border:1px solid #e6eef6;min-width:220px}
+    button.primary{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    button.ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);padding:8px 10px;border-radius:8px;cursor:pointer}
+    main{display:grid;grid-template-columns:320px 1fr;gap:18px}
+    @media(max-width:980px){main{grid-template-columns:1fr}}
+    /* Sidebar filters */
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .filter-group{margin-bottom:12px}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    select,input[type="number"]{width:100%;padding:8px;border-radius:8px;border:1px solid #eef2ff}
+    .checkbox-list{display:flex;flex-direction:column;gap:8px}
+    /* Catalog */
+    .catalog-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media(max-width:1180px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}}
+    .product{background:var(--card);border-radius:12px;padding:12px;border:1px solid rgba(15,23,42,0.03)}
+    .product img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .product h3{margin:8px 0 6px 0;font-size:1rem}
+    .price{font-weight:800;color:var(--accent)}
+    .meta{font-size:0.9rem;color:var(--muted)}
+    .actions{display:flex;gap:8px;margin-top:8px}
+    /* Cart */
+    .cart{position:sticky;top:24px}
+    .cart .items{max-height:420px;overflow:auto;margin-top:8px;display:flex;flex-direction:column;gap:10px}
+    .cart-item{display:flex;gap:10px;align-items:center}
+    .cart-item img{width:56px;height:40px;object-fit:cover;border-radius:8px}
+    .qty{display:flex;gap:6px;align-items:center}
     .small{font-size:0.9rem;color:var(--muted)}
-    /* Stats */
-    .stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .stat{background:var(--glass-2);padding:12px;border-radius:10px;min-width:120px}
-    .stat h3{margin:0;font-size:1.15rem}
-    .stat p{margin:6px 0 0 0;color:var(--muted);font-size:0.9rem}
-    /* TAM SAM SOM bars */
-    .market-bars{display:flex;flex-direction:column;gap:12px;margin-top:12px}
-    .bar{height:16px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
-    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0;transition:width 900ms ease}
-    .bar-label{display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;color:var(--muted)}
-    /* Features grid */
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:2rem 0}
-    @media(max-width:960px){.features{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:620px){.features{grid-template-columns:1fr}}
-    .feature{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));}
-    .feature h4{margin:0 0 6px 0}
-    .tutors{display:flex;gap:12px;flex-wrap:wrap}
-    .tutor{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:var(--glass);min-width:220px}
-    .avatar{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#fff2 0%, #fff0 100%);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent2)}
-    /* Pricing */
-    .pricing{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap}
-    .plan{flex:1;min-width:200px;border-radius:12px;padding:16px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));}
-    .plan .price{font-size:1.5rem;font-weight:800;color:var(--accent1)}
-    /* footer */
-    footer{margin-top:36px;border-top:1px solid rgba(255,255,255,0.03);padding-top:18px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    /* modal */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
-    .modal{width:100%;max-width:520px;background:linear-gradient(180deg,#071127,#05111b);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    label{display:block;font-size:0.9rem;margin:8px 0 6px 0;color:var(--muted)}
-    input[type="text"],input[type="email"],select,textarea{
-      width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;
-    }
-    .row{display:flex;gap:10px}
-    .row .col{flex:1}
-    .tiny{font-size:0.85rem;color:var(--muted)}
-    /* micro-animations */
-    .sparkle{position:relative;overflow:hidden}
-    .hero-illustr{border-radius:14px;padding:18px;background:linear-gradient(135deg, rgba(124,92,255,0.12), rgba(110,231,183,0.06));}
-    .cta-row{display:flex;gap:10px;align-items:center;margin-top:16px}
-    /* accessibility focus */
-    a:focus,button:focus,input:focus{outline:3px solid rgba(124,92,255,0.12);outline-offset:3px}
+    footer{margin-top:22px;text-align:center;color:var(--muted);font-size:0.9rem}
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.5);display:none;align-items:center;justify-content:center;z-index:90;padding:18px}
+    .modal{max-width:720px;width:100%;background:white;border-radius:12px;padding:18px}
+    .close-btn{background:transparent;border:none;font-weight:700;cursor:pointer}
+    /* helper */
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;background:#eef2ff;color:var(--accent);font-weight:700;font-size:0.8rem}
+    .muted{color:var(--muted)}
+    .empty{padding:28px;text-align:center;border-radius:8px;background:#fff;}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap" aria-live="polite">
     <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true">CT</div>
+        <div class="logo" aria-hidden="true">AP</div>
         <div>
-          <div style="font-weight:800">CyberTutor</div>
-          <div class="tiny" style="margin-top:2px">Edukasi keamanan digital untuk semua</div>
+          <h1>AutoParts — Spare Parts for Cars</h1>
+          <div class="small muted">Car-only parts • Search by make, model, year</div>
         </div>
       </div>
 
-      <nav aria-label="Main navigation">
-        <a href="#features">Features</a>
-        <a href="#market">Market</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
-        <button class="btn" id="openSignup">Daftar Kelas</button>
-      </nav>
+      <div class="searchbar" role="search" aria-label="Search products">
+        <input id="search" type="search" placeholder="Search parts (brake pad, filter, mirror)..." aria-label="Search parts" />
+        <select id="sort" aria-label="Sort products">
+          <option value="popular">Sort: Popular</option>
+          <option value="price-asc">Price ↑</option>
+          <option value="price-desc">Price ↓</option>
+          <option value="new">Newest</option>
+        </select>
+        <button class="primary" id="viewCartBtn" aria-haspopup="dialog">View Cart (<span id="cartCount">0</span>)</button>
+      </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div>
-        <h1 id="hero-heading">Belajar keamanan digital yang praktis, singkat, dan menyenangkan</h1>
-        <p>CyberTutor mengajarkan langkah-langkah sederhana untuk lindungi diri dari phishing, penipuan WhatsApp, dan pencurian data — tanpa jargon teknis.</p>
-
-        <div class="feature-chips" role="list">
-          <span class="chip" role="listitem">Kelas 15–30 menit</span>
-          <span class="chip" role="listitem">Bahasa awam</span>
-          <span class="chip" role="listitem">Poin → Voucher</span>
-        </div>
-
-        <div class="cta-row">
-          <button class="btn" id="openSignup2">Mulai Sekarang</button>
-          <a href="#market" class="tiny" style="align-self:center;color:var(--muted)">Lihat market size</a>
-        </div>
-
-        <div class="stats" aria-hidden="true">
-          <div class="stat card">
-            <h3>~220M</h3>
-            <p>Pengguna Internet Indonesia (estimasi 2025)</p>
+    <main>
+      <!-- SIDEBAR filters -->
+      <aside>
+        <div class="card" aria-label="Filters">
+          <div class="filter-group">
+            <label for="make">Make</label>
+            <select id="make">
+              <option value="">All makes</option>
+            </select>
           </div>
-          <div class="stat card">
-            <h3>~88M</h3>
-            <p>Pengguna edukasi online (potensial)</p>
-          </div>
-          <div class="stat card">
-            <h3>1% target</h3>
-            <p>Target awal pengguna (SOM)</p>
-          </div>
-        </div>
-      </div>
 
-      <aside class="hero-illustr card" aria-hidden="true">
-        <!-- Simple illustrative panel: quick quiz -->
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="font-weight:700">Mini-Quiz: Kenali Phishing</div>
-          <div class="tiny">2 soal • 1 menit</div>
-        </div>
+          <div class="filter-group">
+            <label for="model">Model</label>
+            <select id="model" disabled>
+              <option value="">All models</option>
+            </select>
+          </div>
 
-        <div id="quiz" style="background:rgba(255,255,255,0.02);padding:12px;border-radius:10px">
-          <div id="q1" class="question">
-            <div class="tiny" style="margin-bottom:6px">Apa ciri link phishing?</div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn-quiz" data-correct="false">Ada emoji di URL</button>
-              <button class="btn-quiz" data-correct="true">Domain aneh & banyak tanda</button>
-              <button class="btn-quiz" data-correct="false">Icon website</button>
+          <div class="filter-group">
+            <label>Year range</label>
+            <div style="display:flex;gap:8px">
+              <input id="yearMin" type="number" placeholder="2000" min="1980" max="2025" />
+              <input id="yearMax" type="number" placeholder="2025" min="1980" max="2025" />
             </div>
           </div>
-          <div id="q2" class="question" style="display:none;margin-top:10px">
-            <div class="tiny" style="margin-bottom:6px">Email meminta password? Apa tindakan yang benar?</div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn-quiz" data-correct="true">Jangan balas, verifikasi via situs resmi</button>
-              <button class="btn-quiz" data-correct="false">Kirimkan password agar cepat</button>
-              <button class="btn-quiz" data-correct="false">Klik link untuk cek</button>
+
+          <div class="filter-group">
+            <label>Category</label>
+            <div class="checkbox-list" id="categoryList">
+              <!-- categories injected -->
             </div>
           </div>
-          <div id="quiz-result" style="display:none;margin-top:12px">
-            <div style="font-weight:700">Hasil: <span id="score">0</span>/2</div>
-            <div class="tiny">Benar = dapat poin yang bisa ditukar voucher</div>
-            <button class="btn" id="quiz-restart" style="margin-top:8px">Coba Lagi</button>
+
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="primary" id="applyFilters">Apply</button>
+            <button class="ghost" id="resetFilters">Reset</button>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="card cart" aria-label="Shopping cart">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong>Cart</strong>
+            <span class="badge" id="cartTotalPrice">Rp0</span>
+          </div>
+
+          <div class="items" id="cartItems">
+            <div class="empty" id="cartEmpty">Your cart is empty</div>
+          </div>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="primary" id="checkoutBtn">Checkout</button>
+            <button class="ghost" id="clearCartBtn">Clear</button>
           </div>
         </div>
       </aside>
-    </section>
 
-    <!-- FEATURES -->
-    <section id="features">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h2 style="margin:0">Apa yang kami tawarkan</h2>
-        <div class="tiny">Praktis • Ringkas • Bisa langsung dipraktikkan</div>
-      </div>
-
-      <div class="features" role="list">
-        <div class="feature card" role="listitem">
-          <h4>Micro-classes</h4>
-          <p class="small">Kelas 15–30 menit fokus ke tindakan nyata (contoh: amankan WhatsApp, kenali link palsu).</p>
-        </div>
-        <div class="feature card" role="listitem">
-          <h4>Gamified Learning</h4>
-          <p class="small">Selesaikan quiz, kumpulkan poin, tukar voucher dengan merchant partner.</p>
-        </div>
-        <div class="feature card" role="listitem">
-          <h4>Community Sharing</h4>
-          <p class="small">Forum untuk berbagi pengalaman scam dan tips praktis dari pengguna lain.</p>
-        </div>
-        <div class="feature card" role="listitem">
-          <h4>Tutor Praktis</h4>
-          <p class="small">Tutor dari praktisi keamanan yang menjelaskan tanpa jargon teknis.</p>
-        </div>
-        <div class="feature card" role="listitem">
-          <h4>Pay-per-class</h4>
-          <p class="small">Bayar hanya untuk kelas yang diambil — tanpa komitmen bulanan.</p>
-        </div>
-        <div class="feature card" role="listitem">
-          <h4>Lightweight Tech</h4>
-          <p class="small">Aplikasi web cepat, dapat diakses lewat HP atau desktop.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- MARKET (TAM SAM SOM) -->
-    <section id="market" style="margin-top:12px">
-      <h2>Market Size — TAM / SAM / SOM</h2>
-      <p class="small" style="max-width:760px">
-        Estimasi awal untuk presentasi tugas. Angka ini contoh — silakan ganti dengan data sumber yang kamu punya (Kominfo, OJK, laporan industri).
-      </p>
-
-      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
-        <div class="card" style="flex:1;min-width:280px">
-          <div class="tiny">TAM — Total Addressable Market</div>
-          <div style="font-weight:800;font-size:1.4rem">220,000,000 <span class="small">pengguna internet (ID)</span></div>
-          <div style="margin-top:8px" class="small">Seluruh populasi pengguna internet di Indonesia (estimasi).</div>
-        </div>
-
-        <div class="card" style="flex:1;min-width:280px">
-          <div class="tiny">SAM — Serviceable Available Market</div>
-          <div style="font-weight:800;font-size:1.4rem">88,000,000 <span class="small">pengguna edukasi online</span></div>
-          <div style="margin-top:8px" class="small">Pengguna yang cenderung konsumsi kursus & kelas online.</div>
-        </div>
-
-        <div class="card" style="flex:1;min-width:280px">
-          <div class="tiny">SOM — Serviceable Obtainable Market</div>
-          <div style="font-weight:800;font-size:1.4rem">880,000 <span class="small">target awal 1%</span></div>
-          <div style="margin-top:8px" class="small">Target realistis pengguna di tahun pertama (1% dari SAM).</div>
-        </div>
-      </div>
-
-      <div style="margin-top:14px" class="card">
-        <div class="bar-label"><span>TAM</span><span id="tamVal">100%</span></div>
-        <div class="bar"><i id="tamBar" style="width:100%"></i></div>
-
-        <div class="bar-label" style="margin-top:8px"><span>SAM</span><span id="samVal">40%</span></div>
-        <div class="bar"><i id="samBar" style="width:40%"></i></div>
-
-        <div class="bar-label" style="margin-top:8px"><span>SOM</span><span id="somVal">1%</span></div>
-        <div class="bar"><i id="somBar" style="width:1%"></i></div>
-
-        <div class="tiny" style="margin-top:10px">Tip: ubah persentase di atribut data- pada elemen JS untuk menyesuaikan perhitunganmu.</div>
-      </div>
-    </section>
-
-    <!-- Tutors & Pricing -->
-    <section style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
-      <div style="flex:1;min-width:320px">
-        <h3>Tutor Kami</h3>
-        <p class="small">Praktisi yang berpengalaman menjelaskan dengan bahasa awam.</p>
-        <div class="tutors">
-          <div class="tutor card">
-             <img src="dino-furry.png" alt="Tutor Dino Furry 9000" 
-                style="width:48px;height:48px;border-radius:10px;object-fit:cover;" />
-              <div>
-            <div style="font-weight:700">Dino Furry 9000</div>
-           <div class="tiny">Tutor Gamifikasi • Membuat belajar jadi fun & interaktif</div>
-          </div>
-        </div>
-
-          <div class="tutor card">
-            <div class="avatar">LN</div>
-            <div>
-              <div style="font-weight:700">Lina N.</div>
-              <div class="tiny">Trainer digital safety untuk masyarakat</div>
+      <!-- PRODUCTS -->
+      <section>
+        <div class="card">
+          <div class="catalog-controls">
+            <div class="small muted" id="resultsInfo">Showing <span id="shownCount">0</span> products</div>
+            <div style="display:flex;gap:8px">
+              <select id="perPage" aria-label="Products per page">
+                <option value="6">6 / page</option>
+                <option value="9">9 / page</option>
+                <option value="12">12 / page</option>
+              </select>
             </div>
           </div>
-          <div class="tutor card">
-            <div class="avatar">DS</div>
-            <div>
-              <div style="font-weight:700">Dimas S.</div>
-              <div class="tiny">Praktisi SOC • Simulasi serangan & pencegahan</div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div style="flex:1;min-width:320px">
-        <h3 id="pricing">Pricing</h3>
-        <div class="pricing">
-          <div class="plan card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div><strong>Basic</strong><div class="tiny">Kelas tunggal</div></div>
-              <div class="price">Rp25k</div>
-            </div>
-            <ul class="small" style="margin-top:10px;padding-left:16px">
-              <li>Kelas 15–20 menit</li>
-              <li>1 mini-quiz</li>
-              <li>Poin 10 (tukar voucher)</li>
-            </ul>
-            <div style="margin-top:8px"><button class="btn" onclick="openSignupModal('Basic')">Beli Sekarang</button></div>
+          <div id="productGrid" class="grid" aria-live="polite">
+            <!-- products injected here -->
           </div>
 
-          <div class="plan card" style="border:2px solid rgba(124,92,255,0.12)">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div><strong>Pro</strong><div class="tiny">Paket 5 kelas</div></div>
-              <div class="price">Rp90k</div>
-            </div>
-            <ul class="small" style="margin-top:10px;padding-left:16px">
-              <li>5 kelas topik berbeda</li>
-              <li>Access komunitas</li>
-              <li>Poin 60 + bonus voucher</li>
-            </ul>
-            <div style="margin-top:8px"><button class="btn" onclick="openSignupModal('Pro')">Beli Paket</button></div>
-          </div>
+          <div style="display:flex;justify-content:center;margin-top:12px" id="pagination"></div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Contact & footer -->
-    <footer id="contact">
-      <div>
-        <div style="font-weight:700">CyberTutor</div>
-        <div class="tiny">Alamat kantor (contoh): Jl. Contoh No.1, Jakarta</div>
-        <div class="tiny">Email: hello@cybertutor.id</div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="tiny">Follow us</div>
-        <div style="display:flex;gap:6px">
-          <a class="tiny" href="#" aria-label="Twitter">Twitter</a>
-          <a class="tiny" href="#" aria-label="Instagram">Instagram</a>
-        </div>
-      </div>
+    <footer>
+      <div class="muted">© <span id="year"></span> AutoParts — Parts for Cars only. Design for demo; connect real payment & inventory systems for production.</div>
     </footer>
   </div>
 
-  <!-- SIGNUP MODAL -->
+  <!-- PRODUCT QUICK VIEW MODAL -->
   <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal card" role="document">
+    <div class="modal" role="document">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
-          <div style="font-weight:800">Daftar Kelas</div>
-          <div class="tiny" id="selectedPlan">Pilih kelas</div>
+          <h3 id="modalTitle" style="margin:0">Product</h3>
+          <div class="small muted" id="modalSku">SKU: -</div>
         </div>
-        <button id="closeModal" aria-label="Close" style="background:transparent;border:none;color:var(--muted);font-weight:700;cursor:pointer">✕</button>
+        <button class="close-btn" id="closeModal" aria-label="Close modal">✕</button>
       </div>
 
-      <form id="signupForm" style="margin-top:12px">
-        <label for="fullname">Nama lengkap</label>
-        <input id="fullname" name="fullname" type="text" required placeholder="Contoh: Dita S." />
+      <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap">
+        <img id="modalImg" src="" alt="" style="width:260px;height:180px;object-fit:cover;border-radius:8px" />
+        <div style="flex:1;min-width:260px">
+          <div id="modalDesc" class="muted small">Description</div>
+          <div style="margin-top:8px;font-weight:800" id="modalPrice">Rp0</div>
+          <div style="margin-top:12px" id="modalCompatibility" class="small muted">Compatibility</div>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required placeholder="email@domain.com" />
+          <div style="display:flex;gap:8px;margin-top:16px;align-items:center">
+            <label for="modalQty" class="small">Qty</label>
+            <input id="modalQty" type="number" value="1" min="1" style="width:80px;padding:8px;border-radius:8px;border:1px solid #eef2ff" />
+            <button class="primary" id="addToCartModal">Add to cart</button>
+          </div>
 
-        <label for="kelas">Pilih kelas</label>
-        <select id="kelas" name="kelas">
-          <option>Kenali Phishing — 15 menit</option>
-          <option>Lindungi WhatsApp — 20 menit</option>
-          <option>Keamanan Sosial Media — 15 menit</option>
-        </select>
-
-        <div style="display:flex;justify-content:space-between;gap:10px;margin-top:12px">
-          <button type="submit" class="btn">Bayar & Daftar</button>
-          <button type="button" id="cancelModal" style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;color:var(--muted)">Batal</button>
+          <div class="small muted" style="margin-top:12px">Note: This is a demo front-end. Integrate inventory & payment provider for production.</div>
         </div>
-        <div class="tiny" style="margin-top:10px">* Ini demo front-end — integrasikan pembayaran (Midtrans, Xendit, dll) saat implementasi.</div>
-      </form>
+      </div>
     </div>
   </div>
 
   <script>
-    // ---------- Modal logic ----------
-    const modal = document.getElementById('modal');
-    const openBtns = [document.getElementById('openSignup'), document.getElementById('openSignup2')];
-    const closeModalBtn = document.getElementById('closeModal');
-    const cancelModalBtn = document.getElementById('cancelModal');
-    const selectedPlan = document.getElementById('selectedPlan');
+    // ------------------------
+    // Sample product data (cars only)
+    // Replace images and expand catalog as needed.
+    // ------------------------
+    const PRODUCTS = [
+      {
+        id: 'BP-001',
+        title: 'Ceramic Brake Pads - Front',
+        price: 350000,
+        img: 'https://images.unsplash.com/photo-1600267169290-3cf3a7af1b2a?q=80&w=800&auto=format&fit=crop',
+        categories: ['Brakes'],
+        compatibility: [{make:'Toyota', model:'Avanza', yearMin:2012, yearMax:2022},{make:'Honda', model:'Jazz', yearMin:2008, yearMax:2015}],
+        popularity: 80,
+        description: 'High-friction ceramic brake pads, low dust, suited for daily driving (cars).'
+      },
+      {
+        id: 'FT-010',
+        title: 'Air Filter Standard - Universal Fit',
+        price: 90000,
+        img: 'https://images.unsplash.com/photo-1581093588401-6d7d5c2c4b92?q=80&w=800&auto=format&fit=crop',
+        categories: ['Filters'],
+        compatibility: [{make:'Honda', model:'Civic', yearMin:2006, yearMax:2021},{make:'Toyota', model:'Corolla', yearMin:2005, yearMax:2018}],
+        popularity: 70,
+        description: 'Replace every 12k km. Compatible with many sedan models — cars only.'
+      },
+      {
+        id: 'MT-020',
+        title: 'Side Mirror (Right) - Painted',
+        price: 420000,
+        img: 'https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=800&auto=format&fit=crop',
+        categories: ['Exterior'],
+        compatibility: [{make:'Toyota', model:'Yaris', yearMin:2014, yearMax:2020}],
+        popularity: 60,
+        description: 'OEM-like mirror assembly. Choose correct model/year for fitment.'
+      },
+      {
+        id: 'SP-055',
+        title: 'Spark Plug Iridium (Set of 4)',
+        price: 180000,
+        img: 'https://images.unsplash.com/photo-1603376780666-3f8f2c7a7dbc?q=80&w=800&auto=format&fit=crop',
+        categories: ['Engine'],
+        compatibility: [{make:'Honda', model:'Jazz', yearMin:2008, yearMax:2015},{make:'Toyota', model:'Avanza', yearMin:2012, yearMax:2022}],
+        popularity: 65,
+        description: 'Iridium spark plugs for improved ignition and fuel efficiency.'
+      },
+      {
+        id: 'FL-300',
+        title: 'Headlight Bulb (H4) - Halogen',
+        price: 75000,
+        img: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop',
+        categories: ['Lighting'],
+        compatibility: [{make:'Toyota', model:'Corolla', yearMin:2005, yearMax:2018}],
+        popularity: 55,
+        description: 'Standard halogen H4 bulb. Replace in pairs for balanced lighting.'
+      },
+      {
+        id: 'OL-090',
+        title: 'Engine Oil 5W-30 - 4L',
+        price: 220000,
+        img: 'https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=800&auto=format&fit=crop',
+        categories: ['Fluids'],
+        compatibility: [{make:'Universal', model:'Universal', yearMin:1980, yearMax:2030}],
+        popularity: 90,
+        description: 'Semi-synthetic motor oil suitable for most petrol cars. Check owner's manual.'
+      }
+    ];
 
-    openBtns.forEach(b => b.addEventListener('click', () => {
-      selectedPlan.textContent = 'Pilih kelas';
-      modal.style.display = 'flex';
-      modal.setAttribute('aria-hidden','false');
-    }));
-
-    function openSignupModal(plan){
-      selectedPlan.textContent = plan;
-      modal.style.display = 'flex';
-      modal.setAttribute('aria-hidden','false');
-    }
-    window.openSignupModal = openSignupModal;
-
-    function closeModal(){
-      modal.style.display = 'none';
-      modal.setAttribute('aria-hidden','true');
-    }
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelModalBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal() });
-
-    document.getElementById('signupForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      // Demo behavior: show success then close
-      alert('Terima kasih! Link kelas akan dikirim ke email (demo).');
-      closeModal();
-    });
-
-    // ---------- TAM/SAM/SOM bars: animate in ----------
-    const tamBar = document.getElementById('tamBar');
-    const samBar = document.getElementById('samBar');
-    const somBar = document.getElementById('somBar');
-    const tamVal = document.getElementById('tamVal');
-    const samVal = document.getElementById('samVal');
-    const somVal = document.getElementById('somVal');
-
-    // Data attributes: change numbers here to reflect real calculations
-    const data = {
-      tamPct: 100,
-      samPct: 40,
-      somPct: 1
+    // ------------------------
+    // State
+    // ------------------------
+    let state = {
+      products: PRODUCTS.slice(),
+      filters: {make:'', model:'', yearMin:'', yearMax:'', categories:[]},
+      search: '',
+      sort: 'popular',
+      perPage: 6,
+      page: 1,
+      cart: JSON.parse(localStorage.getItem('cart_v1') || '{}')
     };
 
-    // animate after load
-    window.addEventListener('load', ()=>{
-      setTimeout(()=>{
-        tamBar.style.width = data.tamPct + '%';
-        samBar.style.width = data.samPct + '%';
-        somBar.style.width = data.somPct + '%';
-        tamVal.textContent = data.tamPct + '%';
-        samVal.textContent = data.samPct + '%';
-        somVal.textContent = data.somPct + '%';
-      }, 250);
-    });
-
-    // ---------- Mini quiz logic ----------
-    const quizButtons = document.querySelectorAll('.btn-quiz');
-    let currentQuestion = 1;
-    let score = 0;
-
-    quizButtons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const correct = btn.getAttribute('data-correct') === 'true';
-        btn.disabled = true;
-        if(correct){
-          btn.style.transform='translateY(-2px)';
-          score++;
-        } else {
-          btn.style.opacity = '0.6';
+    // --------------
+    // Helpers
+    // --------------
+    function formatRp(v){
+      return 'Rp' + v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function saveCart(){ localStorage.setItem('cart_v1', JSON.stringify(state.cart)); updateCartUI(); }
+    function updateCartUI(){
+      const cartCount = Object.values(state.cart).reduce((s,it)=>s+it.qty,0);
+      document.getElementById('cartCount').textContent = cartCount;
+      const cartItemsEl = document.getElementById('cartItems');
+      cartItemsEl.innerHTML = '';
+      if(cartCount === 0){
+        document.getElementById('cartEmpty').style.display = 'block';
+      } else {
+        document.getElementById('cartEmpty').style.display = 'none';
+        for(const [id,item] of Object.entries(state.cart)){
+          const el = document.createElement('div');
+          el.className = 'cart-item';
+          el.innerHTML = `
+            <img src="${item.img}" alt="${item.title}" />
+            <div style="flex:1">
+              <div style="font-weight:700">${item.title}</div>
+              <div class="small muted">${item.sku}</div>
+            </div>
+            <div style="text-align:right">
+              <div class="qty">
+                <button class="ghost" data-action="dec" data-id="${id}">-</button>
+                <div class="small">${item.qty}</div>
+                <button class="ghost" data-action="inc" data-id="${id}">+</button>
+              </div>
+              <div style="margin-top:6px" class="price">${formatRp(item.qty * item.price)}</div>
+            </div>
+          `;
+          cartItemsEl.appendChild(el);
         }
-
-        // move to next question or reveal result
-        const q1 = document.getElementById('q1');
-        const q2 = document.getElementById('q2');
-        const result = document.getElementById('quiz-result');
-        const scoreEl = document.getElementById('score');
-
-        setTimeout(()=> {
-          if(currentQuestion === 1){
-            q1.style.display = 'none';
-            q2.style.display = 'block';
-            currentQuestion = 2;
-          } else {
-            q2.style.display = 'none';
-            scoreEl.textContent = score;
-            result.style.display = 'block';
-          }
-        }, 600);
+      }
+      const total = Object.values(state.cart).reduce((s,it)=>s + it.price*it.qty,0);
+      document.getElementById('cartTotalPrice').textContent = formatRp(total);
+      // cart buttons events
+      cartItemsEl.querySelectorAll('button[data-action]').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const id = btn.getAttribute('data-id');
+          if(btn.getAttribute('data-action') === 'inc') state.cart[id].qty++;
+          else { state.cart[id].qty--; if(state.cart[id].qty <= 0) delete state.cart[id]; }
+          saveCart();
+        });
       });
+    }
+
+    // -------------------
+    // Build make/model/category lists
+    // -------------------
+    function buildFilters(){
+      const makes = new Set();
+      const modelsByMake = {};
+      const categories = new Set();
+
+      PRODUCTS.forEach(p=>{
+        p.compatibility.forEach(c=>{
+          if(c.make && c.make !== 'Universal') makes.add(c.make);
+          if(c.make && c.make !== 'Universal'){
+            modelsByMake[c.make] = modelsByMake[c.make] || new Set();
+            if(c.model && c.model !== 'Universal') modelsByMake[c.make].add(c.model);
+          }
+        });
+        p.categories.forEach(cat=>categories.add(cat));
+      });
+
+      // populate make
+      const makeSel = document.getElementById('make');
+      makeSel.innerHTML = '<option value="">All makes</option>';
+      Array.from(makes).sort().forEach(m=>{
+        const opt = document.createElement('option'); opt.value = m; opt.textContent = m; makeSel.append(opt);
+      });
+
+      // categories list
+      const catEl = document.getElementById('categoryList');
+      catEl.innerHTML = '';
+      Array.from(categories).sort().forEach(cat=>{
+        const id = 'cat-' + cat.replace(/\s+/g,'_');
+        const wrapper = document.createElement('label');
+        wrapper.innerHTML = `<input type="checkbox" value="${cat}" id="${id}" /> <span class="small">${cat}</span>`;
+        catEl.appendChild(wrapper);
+      });
+
+      // when make changes -> populate model
+      makeSel.addEventListener('change', ()=>{
+        const make = makeSel.value;
+        const modelSel = document.getElementById('model');
+        modelSel.innerHTML = '<option value="">All models</option>';
+        if(!make){ modelSel.disabled = true; return; }
+        modelSel.disabled = false;
+        Array.from(modelsByMake[make] || []).sort().forEach(m=>{
+          const o = document.createElement('option'); o.value = m; o.textContent = m; modelSel.append(o);
+        });
+      });
+    }
+
+    // -------------------
+    // Render products grid with filters, search, sort, pagination
+    // -------------------
+    function productMatchesFilters(p){
+      const f = state.filters;
+      // make/model/year
+      if(f.make){
+        const matchesMake = p.compatibility.some(c => (c.make === f.make) || (c.make === 'Universal' && f.make));
+        if(!matchesMake) return false;
+      }
+      if(f.model){
+        const matchesModel = p.compatibility.some(c => (c.model === f.model) || (c.model === 'Universal' && f.model));
+        if(!matchesModel) return false;
+      }
+      if(f.yearMin || f.yearMax){
+        const yMin = f.yearMin ? parseInt(f.yearMin,10) : -Infinity;
+        const yMax = f.yearMax ? parseInt(f.yearMax,10) : Infinity;
+        const matchesYear = p.compatibility.some(c => {
+          const min = parseInt(c.yearMin || -Infinity,10);
+          const max = parseInt(c.yearMax || Infinity,10);
+          return (min <= yMax) && (max >= yMin);
+        });
+        if(!matchesYear) return false;
+      }
+      // categories
+      if(f.categories && f.categories.length){
+        const ok = f.categories.every(cat => p.categories.includes(cat));
+        if(!ok) return false;
+      }
+      // search
+      const s = state.search.trim().toLowerCase();
+      if(s){
+        const inTitle = p.title.toLowerCase().includes(s);
+        const inDesc = p.description.toLowerCase().includes(s);
+        const inSku = p.id.toLowerCase().includes(s);
+        if(!(inTitle || inDesc || inSku)) return false;
+      }
+      return true;
+    }
+
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      const perPage = parseInt(document.getElementById('perPage').value,10);
+      state.perPage = perPage;
+      // apply filters
+      const filtered = PRODUCTS.filter(productMatchesFilters);
+
+      // sort
+      if(state.sort === 'price-asc') filtered.sort((a,b)=>a.price-b.price);
+      else if(state.sort === 'price-desc') filtered.sort((a,b)=>b.price-a.price);
+      else if(state.sort === 'new') filtered.sort((a,b)=>b.popularity - a.popularity); // placeholder
+      else filtered.sort((a,b)=>b.popularity - a.popularity);
+
+      const total = filtered.length;
+      const pages = Math.max(1, Math.ceil(total / perPage));
+      if(state.page > pages) state.page = pages;
+      const start = (state.page-1) * perPage;
+      const pageItems = filtered.slice(start, start + perPage);
+
+      grid.innerHTML = '';
+      pageItems.forEach(p=>{
+        const card = document.createElement('article');
+        card.className = 'product';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" />
+          <h3>${p.title}</h3>
+          <div class="meta small muted">${p.categories.join(' • ')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div class="price">${formatRp(p.price)}</div>
+            <div style="display:flex;gap:8px">
+              <button class="ghost" data-action="view" data-id="${p.id}">View</button>
+              <button class="primary" data-action="add" data-id="${p.id}">Add</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // pagination
+      const pagEl = document.getElementById('pagination');
+      pagEl.innerHTML = '';
+      for(let i=1;i<=pages;i++){
+        const btn = document.createElement('button');
+        btn.className = 'ghost';
+        btn.textContent = i;
+        if(i === state.page) btn.style.border = '2px solid var(--accent)';
+        btn.addEventListener('click', ()=>{ state.page = i; renderProducts(); });
+        pagEl.appendChild(btn);
+      }
+
+      document.getElementById('shownCount').textContent = total;
+      // attach action handlers
+      grid.querySelectorAll('button[data-action="add"]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.getAttribute('data-id');
+          addToCartById(id, 1);
+        });
+      });
+      grid.querySelectorAll('button[data-action="view"]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.getAttribute('data-id');
+          openProductModal(id);
+        });
+      });
+    }
+
+    // -------------------
+    // Cart operations
+    // -------------------
+    function addToCartById(id, qty=1){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      if(!state.cart[id]) state.cart[id] = { sku: p.id, title: p.title, price: p.price, img: p.img, qty:0 };
+      state.cart[id].qty += qty;
+      saveCart();
+      alert(`${p.title} added to cart`);
+    }
+
+    // -------------------
+    // Modal
+    // -------------------
+    function openProductModal(id){
+      const p = PRODUCTS.find(x=>x.id === id);
+      if(!p) return;
+      document.getElementById('modalTitle').textContent = p.title;
+      document.getElementById('modalSku').textContent = 'SKU: ' + p.id;
+      document.getElementById('modalImg').src = p.img;
+      document.getElementById('modalDesc').textContent = p.description;
+      document.getElementById('modalPrice').textContent = formatRp(p.price);
+      const compat = p.compatibility.map(c=>{
+        if(c.make === 'Universal') return 'Universal (many cars)';
+        return `${c.make} ${c.model} (${c.yearMin || '?'}–${c.yearMax || '?'})`;
+      }).join(' • ');
+      document.getElementById('modalCompatibility').textContent = 'Compatibility: ' + compat;
+      document.getElementById('addToCartModal').dataset.id = p.id;
+      document.getElementById('modalQty').value = 1;
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modal').setAttribute('aria-hidden','false');
+    }
+    document.getElementById('closeModal').addEventListener('click', ()=>{
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modal').setAttribute('aria-hidden','true');
+    });
+    document.getElementById('addToCartModal').addEventListener('click', ()=>{
+      const id = document.getElementById('addToCartModal').dataset.id;
+      const qty = parseInt(document.getElementById('modalQty').value || '1',10);
+      addToCartById(id, qty);
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modal').setAttribute('aria-hidden','true');
     });
 
-    document.getElementById('quiz-restart').addEventListener('click', ()=>{
-      // reset
-      score = 0; currentQuestion = 1;
-      document.getElementById('q1').style.display = 'block';
-      document.getElementById('q2').style.display = 'none';
-      document.getElementById('quiz-result').style.display = 'none';
-      document.querySelectorAll('.btn-quiz').forEach(b => { b.disabled = false; b.style.opacity = '1'; b.style.transform='none' });
+    // -------------------
+    // Events: filters, search, sort, per page
+    // -------------------
+    document.getElementById('applyFilters').addEventListener('click', ()=>{
+      const make = document.getElementById('make').value;
+      const model = document.getElementById('model').value;
+      const yearMin = document.getElementById('yearMin').value;
+      const yearMax = document.getElementById('yearMax').value;
+      const categories = Array.from(document.querySelectorAll('#categoryList input[type="checkbox"]:checked')).map(i=>i.value);
+      state.filters = { make, model, yearMin, yearMax, categories };
+      state.page = 1;
+      renderProducts();
+    });
+    document.getElementById('resetFilters').addEventListener('click', ()=>{
+      document.getElementById('make').value = '';
+      document.getElementById('model').innerHTML = '<option value="">All models</option>'; document.getElementById('model').disabled = true;
+      document.getElementById('yearMin').value = ''; document.getElementById('yearMax').value = '';
+      document.querySelectorAll('#categoryList input[type="checkbox"]').forEach(i=>i.checked=false);
+      state.filters = {make:'',model:'',yearMin:'',yearMax:'',categories:[]};
+      state.page = 1;
+      renderProducts();
+    });
+    document.getElementById('search').addEventListener('input', (e)=>{
+      state.search = e.target.value;
+      state.page = 1;
+      renderProducts();
+    });
+    document.getElementById('sort').addEventListener('change', (e)=>{
+      state.sort = e.target.value;
+      renderProducts();
+    });
+    document.getElementById('perPage').addEventListener('change', (e)=>{
+      state.perPage = parseInt(e.target.value,10);
+      state.page = 1;
+      renderProducts();
     });
 
-    // keyboard accessibility for modal: close with Esc
+    // Checkout (demo)
+    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+      const total = Object.values(state.cart).reduce((s,it)=>s + it.price*it.qty,0);
+      if(total === 0){ alert('Cart is empty'); return; }
+      // Simple form prompt (for demo). Integrate with proper checkout & email in production.
+      const name = prompt('Enter your name for checkout:');
+      const email = prompt('Enter your email to receive invoice:');
+      if(!name || !email){ alert('Checkout cancelled'); return; }
+      // Here you would send order to server & call payment API
+      alert('Checkout demo: Order placed. Total: ' + formatRp(total) + '\nWe did not process payment (demo).');
+      state.cart = {}; saveCart();
+    });
+
+    // Clear cart
+    document.getElementById('clearCartBtn').addEventListener('click', ()=>{
+      if(confirm('Clear cart?')) { state.cart = {}; saveCart(); }
+    });
+
+    // View cart button opens mobile/quick view (focus)
+    document.getElementById('viewCartBtn').addEventListener('click', ()=>{
+      const el = document.querySelector('.cart');
+      if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // close modal with Escape
     window.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape') closeModal();
+      if(e.key === 'Escape') {
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('modal').setAttribute('aria-hidden','true');
+      }
     });
 
-    // small helper: prebind second signup trigger
-    document.getElementById('openSignup2').addEventListener('click', ()=>{ openSignupModal('Basic') });
-
+    // init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    buildFilters();
+    renderProducts();
+    updateCartUI();
   </script>
 </body>
 </html>
