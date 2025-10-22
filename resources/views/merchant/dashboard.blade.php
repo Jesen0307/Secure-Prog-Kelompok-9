@@ -6,7 +6,7 @@
   <title>Merchant Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script>
-    // Modal toggle for Add Product
+    // Toggle modal visibility
     function toggleModal(show) {
       document.getElementById('addProductModal').classList.toggle('hidden', !show);
     }
@@ -53,6 +53,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           @foreach ($products as $product)
             <div class="bg-gray-700 rounded-lg shadow hover:shadow-lg p-4 transition transform hover:-translate-y-1">
+
+              <!-- IMAGE -->
               @if ($product->image)
                 <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-40 object-cover rounded mb-3" alt="{{ $product->name }}">
               @else
@@ -60,11 +62,27 @@
                   No Image
                 </div>
               @endif
+
+              <!-- PRODUCT DETAILS -->
               <h4 class="text-lg font-semibold text-white">{{ $product->name }}</h4>
               <p class="text-green-400 mb-1 font-medium">${{ number_format($product->price, 2) }}</p>
+              <p class="text-sm text-gray-300"><span class="font-semibold">Category:</span> {{ $product->category }}</p>
+              <p class="text-sm text-gray-300 mb-2"><span class="font-semibold">Stock:</span> {{ $product->stock }}</p>
+
               @if ($product->description)
                 <p class="text-gray-300 text-sm mt-1">{{ $product->description }}</p>
               @endif
+
+              <!-- DELETE BUTTON -->
+              <form method="POST" action="{{ route('merchant.products.destroy', $product->id) }}" 
+                    onsubmit="return confirm('Are you sure you want to delete this product?');" class="mt-3">
+                @csrf
+                @method('DELETE')
+                <button type="submit" 
+                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition text-sm">
+                  Delete
+                </button>
+              </form>
             </div>
           @endforeach
         </div>
@@ -88,6 +106,24 @@
         <div class="mb-3">
           <label class="block text-gray-300 font-medium">Price (USD)</label>
           <input type="number" name="price" step="0.01" class="w-full border border-gray-600 bg-gray-700 rounded px-3 py-2 text-white" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="block text-gray-300 font-medium">Category</label>
+          <select name="category" class="w-full border border-gray-600 bg-gray-700 rounded px-3 py-2 text-white" required>
+            <option value="" disabled selected>-- Select Category --</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Food">Food</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Beauty and Personal Care">Beauty and Personal Care</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Pet Products">Pet Products</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="block text-gray-300 font-medium">Stock Quantity</label>
+          <input type="number" name="stock" min="0" value="0" class="w-full border border-gray-600 bg-gray-700 rounded px-3 py-2 text-white" required>
         </div>
 
         <div class="mb-3">

@@ -4,24 +4,36 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id(); // BIGINT UNSIGNED
-            $table->unsignedBigInteger('merchant_id'); // Match merchants.id type
+            $table->id();
+
+            // Relasi aman ke merchant (hapus otomatis jika merchant dihapus)
+            $table->foreignId('merchant_id')
+                ->constrained('merchants')
+                ->onDelete('cascade')
+                ->index();
+
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
-            $table->timestamps();
+            $table->integer('stock')->default(0);
 
-            // Define foreign key AFTER declaring merchant_id
-            $table->foreign('merchant_id')
-                  ->references('id')
-                  ->on('merchants')
-                  ->onDelete('cascade');
+            $table->enum('category', [
+                'Electronic',
+                'Food',
+                'Fashion',
+                'Beauty and Personal Care',
+                'Furniture',
+                'Pet Products'
+            ])->index();
+
+            $table->string('image')->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -29,4 +41,4 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists('products');
     }
-}
+};

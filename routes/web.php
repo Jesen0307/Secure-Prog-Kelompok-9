@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\MerchantAuthController;
@@ -13,12 +14,12 @@ use App\Http\Controllers\MerchantProductController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Show login form
+
 Route::get('/login', function () {
-    return view('login');
+    return view('home');
 })->name('login');
 
-// Handle login form submission
+
 Route::post('/login', [UserController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
@@ -35,7 +36,7 @@ Route::get('/dashboard', function () {
         'user' => $user,
         'products' => $products,
     ]);
-})->name('dashboard')->middleware('auth');
+})->name('dashboard.home')->middleware('auth');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -53,29 +54,49 @@ Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('
 
 
 
-// Merchant login/logout
+
 Route::get('/merchant/login', [MerchantAuthController::class, 'showLoginForm'])->name('merchant.login');
 Route::post('/merchant/login', [MerchantAuthController::class, 'login'])->name('merchant.login.submit');
 Route::post('/merchant/logout', [MerchantAuthController::class, 'logout'])->name('merchant.logout');
 
-// Merchant register
+
 Route::get('/merchant/register', [MerchantAuthController::class, 'showRegisterForm'])->name('merchant.register');
 Route::post('/merchant/register', [MerchantAuthController::class, 'register'])->name('merchant.register.submit');
 
-// Merchant forgot password + reset
+
 Route::get('/merchant/forgot-password', [MerchantAuthController::class, 'showForgotPasswordForm'])->name('merchant.password.request');
 Route::post('/merchant/forgot-password', [MerchantAuthController::class, 'sendResetLink'])->name('merchant.password.email');
 Route::get('/merchant/reset-password/{token}', [MerchantAuthController::class, 'showResetForm'])->name('merchant.password.reset');
 Route::post('/merchant/reset-password', [MerchantAuthController::class, 'resetPassword'])->name('merchant.password.update');
 
-// Merchant dashboard
+
 Route::get('/merchant/dashboard', [MerchantAuthController::class, 'dashboard'])
     ->middleware('auth:merchant')
     ->name('merchant.dashboard');
 
-// routes/web.php
 Route::post('/merchant/products', [MerchantProductController::class, 'store'])
     ->name('merchant.products.store')
     ->middleware('auth:merchant');
+
+Route::delete('/merchant/products/{id}', [MerchantProductController::class, 'destroy'])
+    ->name('merchant.products.destroy')
+    ->middleware('auth:merchant');
+
+
+Route::get('/product/{id}', [ProductController::class, 'show'])
+    ->whereNumber('id')
+    ->name('product.show');
+
+Route::middleware('auth')->group(function() {
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    
+    Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
+});
+Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+
 
 

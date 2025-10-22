@@ -27,7 +27,7 @@ class UserController extends Controller
             'password' => $incomingFields['loginpassword']
         ])) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard.home');
         }
 
         
@@ -109,7 +109,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.home');
     }
 
     // ================= LOGOUT =================

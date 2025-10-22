@@ -8,19 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-
-    // Allow mass assignment for these fields
     protected $fillable = [
         'merchant_id',
         'name',
         'price',
         'description',
+        'category',
+        'stock',
         'image',
     ];
 
-    // Relationship: a product belongs to a merchant
+    protected $casts = [
+        'price' => 'float',
+        'merchant_id' => 'integer',
+    ];
     public function merchant()
     {
         return $this->belongsTo(Merchant::class);
+    }
+    public function getDescriptionAttribute($value)
+    {
+        return e($value);
+    }
+    public function getNameAttribute($value)
+    {
+        return e($value);
     }
 }
