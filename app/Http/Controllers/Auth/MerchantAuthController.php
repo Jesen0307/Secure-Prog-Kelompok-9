@@ -12,17 +12,13 @@ use Illuminate\Support\Facades\Password;
 
 class MerchantAuthController extends Controller
 {
-    /**
-     * Show merchant login form.
-     */
+
     public function showLoginForm()
     {
-        return view('auth.merchant-login'); // create this Blade file later
+        return view('auth.merchant-login'); 
     }
 
-    /**
-     * Handle merchant login.
-     */
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -45,9 +41,7 @@ class MerchantAuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * Merchant logout.
-     */
+
     public function logout(Request $request)
     {
         Auth::guard('merchant')->logout();
@@ -55,32 +49,29 @@ class MerchantAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('merchant.login');
+        return redirect()->route('home');
     }
 
-    /**
-     * Merchant dashboard.
-     */
+
     public function dashboard()
     {
         if (Auth::guard('merchant')->check()) {
-            // Ambil data merchant yang sedang login
+
             $merchant = Auth::guard('merchant')->user();
 
-            // Ambil semua produk milik merchant tersebut
+
             $products = \App\Models\Product::where('merchant_id', $merchant->id)->get();
 
-            // Ambil semua order yang masuk ke merchant ini
+
             $orders = \App\Models\Transaction::with(['buyer', 'items.product'])
                 ->where('merchant_id', $merchant->id)
                 ->orderBy('created_at', 'asc')
                 ->get();
 
-            // Kirim data ke view
+
             return view('merchant.dashboard', compact('merchant', 'products', 'orders'));
         }
 
-        // Jika belum login, redirect ke halaman login merchant
         return redirect()->route('merchant.login');
     }
 
@@ -90,9 +81,7 @@ class MerchantAuthController extends Controller
         return view('auth.merchant-register');
     }
 
-    /**
-     * Handle merchant registration.
-     */
+
     public function register(Request $request)
     {
         $request->validate([
@@ -112,17 +101,13 @@ class MerchantAuthController extends Controller
         return redirect()->route('merchant.dashboard');
     }
 
-    /**
-     * Show forgot password form.
-     */
+
     public function showForgotPasswordForm()
     {
         return view('auth.merchant-forgot-password');
     }
 
-    /**
-     * Send reset link.
-     */
+
     public function sendResetLink(Request $request)
     {
         $request->validate(['email' => 'required|email']);
@@ -136,9 +121,7 @@ class MerchantAuthController extends Controller
                     : back()->withErrors(['email' => __($status)]);
     }
 
-    /**
-     * Show reset form.
-     */
+
     public function showResetForm(Request $request, $token = null)
     {
         return view('auth.merchant-reset-password', [
@@ -147,9 +130,7 @@ class MerchantAuthController extends Controller
         ]);
     }
 
-    /**
-     * Handle reset password.
-     */
+
     public function resetPassword(Request $request)
     {
         $request->validate([

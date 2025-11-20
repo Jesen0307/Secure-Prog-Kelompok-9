@@ -50,6 +50,7 @@ class CheckoutController extends Controller
         try {
             $user->wallet_balance = bcsub($user->wallet_balance, $grandTotal, 2);
             $user->save();
+            Auth::setUser($user->fresh());
 
             foreach ($itemsByMerchant as $merchantId => $items) {
                 $total = array_sum(array_column($items, 'subtotal'));
