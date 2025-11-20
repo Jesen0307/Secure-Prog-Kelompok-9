@@ -8,24 +8,38 @@
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-<!-- Navbar -->
+
 <nav class="bg-gray-800 shadow-lg p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-400">Shop Dashboard</h1>
     <div class="flex gap-3 items-center">
 
-        <!-- Login as Merchant -->
         <a href="{{ route('merchant.login') }}"
            class="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium transition">
           Login as Merchant
         </a>
 
-        <!-- Cart Button -->
+        <div class="px-4 py-2 bg-purple-600 rounded-lg text-white font-medium">
+          💰 ${{ number_format(Auth::user()->wallet_balance ?? 0, 2) }}
+        </div>
+
+
         <a href="{{ route('cart.index') }}"
            class="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium transition flex items-center gap-2">
             🛒 Cart ({{ auth()->user()->cart?->items->count() ?? 0 }})
         </a>
 
-        <!-- Logout -->
+        <a href="{{ route('profile.view') }}"
+           class="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg text-white font-medium transition">
+            @if(Auth::user()->profile_photo)
+                <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" 
+                     alt="Profile Photo" class="w-6 h-6 rounded-full object-cover border border-white">
+            @else
+                <span class="text-lg">👤</span>
+            @endif
+            Profile
+        </a>
+
+
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit"
@@ -36,7 +50,6 @@
     </div>
 </nav>
 
-<!-- Welcome Section -->
 <section class="text-center py-12 bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg">
     <h2 class="text-4xl font-extrabold text-blue-400">
       Welcome, {{ e(Auth::user()->name) }} 🎉
@@ -46,7 +59,6 @@
     </p>
 </section>
 
-<!-- Search Bar -->
 <section class="flex justify-center mt-8 mb-6">
     <form action="{{ route('search') }}" method="GET" class="w-full max-w-lg flex">
         @csrf
@@ -60,7 +72,6 @@
     </form>
 </section>
 
-<!-- Product Section -->
 <section class="p-8">
     <h3 class="text-2xl font-semibold mb-6 text-blue-300">Recommended Products</h3>
 
@@ -93,7 +104,6 @@
     @endif
 </section>
 
-<!-- Footer -->
 <footer class="bg-gray-800 text-center p-6 mt-12">
     <p class="text-gray-400">&copy; {{ date('Y') }} Shop. All rights reserved.</p>
 </footer>

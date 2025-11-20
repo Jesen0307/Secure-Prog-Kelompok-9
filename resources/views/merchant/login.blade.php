@@ -24,7 +24,7 @@
       </button>
     </form>
 
-    <!-- Register & Forgot Password Links -->
+
     <div class="mt-4 flex justify-between text-sm">
       <a href="{{ route('merchant.register') }}" class="text-blue-600 hover:underline">
         Register as Merchant

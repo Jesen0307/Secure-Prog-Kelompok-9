@@ -6,7 +6,6 @@
   <title>Merchant Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script>
-    // Toggle modal visibility
     function toggleModal(show) {
       document.getElementById('addProductModal').classList.toggle('hidden', !show);
     }
@@ -15,7 +14,7 @@
 
 <body class="bg-gray-900 text-gray-100 min-h-screen">
 
-  <!-- NAVBAR -->
+
   <nav class="bg-gray-800 p-4 flex justify-between items-center shadow-md">
     <h1 class="text-2xl font-bold text-green-400">Merchant Dashboard</h1>
     <div class="flex space-x-3 items-center">
@@ -31,19 +30,19 @@
     </div>
   </nav>
 
-  <!-- MAIN CONTENT -->
+
   <div class="p-8 max-w-6xl mx-auto">
     <h2 class="text-2xl font-bold mb-2">Welcome, <span class="text-green-400">{{ $merchant->name }}</span></h2>
     <p class="text-gray-400 mb-6">Manage your products and view your sales performance.</p>
 
-    <!-- SUCCESS MESSAGE -->
+
     @if (session('success'))
       <div class="bg-green-900 text-green-200 border border-green-700 p-3 mb-4 rounded">
         {{ session('success') }}
       </div>
     @endif
 
-    <!-- PRODUCT LIST -->
+
     <div class="bg-gray-800 p-5 rounded-lg shadow-md">
       <h3 class="text-xl font-semibold text-green-400 mb-4">Your Products</h3>
 
@@ -54,7 +53,6 @@
           @foreach ($products as $product)
             <div class="bg-gray-700 rounded-lg shadow hover:shadow-lg p-4 transition transform hover:-translate-y-1">
 
-              <!-- IMAGE -->
               @if ($product->image)
                 <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-40 object-cover rounded mb-3" alt="{{ $product->name }}">
               @else
@@ -63,7 +61,7 @@
                 </div>
               @endif
 
-              <!-- PRODUCT DETAILS -->
+
               <h4 class="text-lg font-semibold text-white">{{ $product->name }}</h4>
               <p class="text-green-400 mb-1 font-medium">${{ number_format($product->price, 2) }}</p>
               <p class="text-sm text-gray-300"><span class="font-semibold">Category:</span> {{ $product->category }}</p>
@@ -73,7 +71,7 @@
                 <p class="text-gray-300 text-sm mt-1">{{ $product->description }}</p>
               @endif
 
-              <!-- DELETE BUTTON -->
+
               <form method="POST" action="{{ route('merchant.products.destroy', $product->id) }}" 
                     onsubmit="return confirm('Are you sure you want to delete this product?');" class="mt-3">
                 @csrf
@@ -88,9 +86,77 @@
         </div>
       @endif
     </div>
+
+
+    <div class="bg-gray-800 p-5 rounded-lg shadow-md mt-10">
+      <h3 class="text-xl font-semibold text-green-400 mb-4">Incoming Orders</h3>
+
+      @if (isset($orders) && $orders->isNotEmpty())
+        <div class="overflow-x-auto">
+          <table class="min-w-full border border-gray-700 text-sm">
+            <thead class="bg-gray-700 text-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left">Order ID</th>
+                <th class="px-4 py-2 text-left">Buyer</th>
+                <th class="px-4 py-2 text-left">Product</th>
+                <th class="px-4 py-2 text-left">Total</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Date</th>
+              </tr>
+            </thead>
+                      <tbody class="bg-gray-800 text-gray-100">
+            @foreach ($orders as $order)
+              <tr class="border-t border-gray-700 hover:bg-gray-700 transition">
+
+                <td class="px-4 py-2">#{{ $order->id }}</td>
+
+
+                <td class="px-4 py-2">
+                  {{ $order->buyer ? $order->buyer->name : 'Unknown Buyer' }}
+                </td>
+
+
+                <td class="px-4 py-2">
+                  @if ($order->items->isNotEmpty())
+                    @foreach ($order->items as $item)
+                      <div>
+                        {{ $item->product->name }} (x{{ $item->quantity }})
+                      </div>
+                    @endforeach
+                  @else
+                    <span class="text-gray-400">No Products</span>
+                  @endif
+                </td>
+
+
+                <td class="px-4 py-2 text-green-400">
+                  ${{ number_format($order->total_amount, 2) }}
+                </td>
+
+                <td class="px-4 py-2 capitalize">
+                  <span class="px-2 py-1 rounded text-xs 
+                    @if($order->status === 'pending') bg-yellow-600 text-yellow-100 
+                    @elseif($order->status === 'paid') bg-blue-600 text-blue-100
+                    @elseif($order->status === 'shipped') bg-purple-600 text-purple-100
+                    @else bg-green-600 text-green-100 @endif">
+                    {{ $order->status }}
+                  </span>
+                </td>
+
+                <td class="px-4 py-2">
+                  {{ $order->created_at->format('d M Y H:i') }}
+                </td>
+              </tr>
+            @endforeach
+          </tbody>
+          </table>
+        </div>
+      @else
+        <p class="text-gray-400 text-center py-6">No orders received yet.</p>
+      @endif
+    </div>
   </div>
 
-  <!-- ADD PRODUCT MODAL -->
   <div id="addProductModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
     <div class="bg-gray-800 rounded-lg w-96 p-6 relative shadow-lg border border-gray-700">
       <h2 class="text-2xl font-bold mb-4 text-center text-green-400">Add New Product</h2>

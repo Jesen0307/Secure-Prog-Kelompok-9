@@ -14,7 +14,9 @@ class ProductController extends Controller
         ]);
 
         $query = trim($validated['query']);
+
         $products = Product::where('is_active', true)
+            ->where('stock', '>=', 1)
             ->where('name', 'like', "%{$query}%")
             ->limit(20)
             ->get();
@@ -24,27 +26,27 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        // Validasi ID
+
         if (!ctype_digit($id) || (int)$id <= 0) {
             abort(400, 'Invalid product ID');
         }
 
-        // Ambil produk utama
         $product = Product::with('merchant')
             ->where('id', $id)
             ->where('is_active', true)
+            ->where('stock', '>=', 1)
             ->first();
 
         if (!$product) {
-            abort(404, 'Product not found');
+            abort(404, 'Product not found or out of stock');
         }
 
-        // Ambil produk lain sebagai rekomendasi (exclude produk yang sedang dibuka)
         $products = Product::where('is_active', true)
+            ->where('stock', '>=', 1)
             ->where('id', '!=', $id)
+            ->limit(10)
             ->get();
 
-        // Kirim kedua variabel ke view
         return view('product-detail', compact('product', 'products'));
     }
 }

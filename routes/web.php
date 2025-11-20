@@ -10,6 +10,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\MerchantAuthController;
 use App\Http\Controllers\MerchantProductController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProfileController;
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -30,13 +33,16 @@ Route::get('/dashboard', function () {
     }
 
     $user = Auth::user();
-    $products = Product::orderBy('created_at', 'desc')->get(); // semua produk, terbaru dulu
+    $products = Product::where('stock', '>=', 1)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
     return view('dashboard', [
         'user' => $user,
         'products' => $products,
     ]);
 })->name('dashboard.home')->middleware('auth');
+
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -89,14 +95,22 @@ Route::get('/product/{id}', [ProductController::class, 'show'])
 
 Route::middleware('auth')->group(function() {
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
 });
 Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('auth');
 
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile.view');
+
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 
 

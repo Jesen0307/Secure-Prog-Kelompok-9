@@ -13,7 +13,7 @@
           authMode: "{{ session("authMode") ?? "login" }}"
       }'>
 
-  <!-- Navbar -->
+
   <nav class="bg-gray-800 shadow-lg p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-400">Shop</h1>
     <button @click="showAuth = true; authMode = 'login'"
@@ -22,7 +22,6 @@
     </button>
   </nav>
 
-  <!-- Hero Section -->
   <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-center py-20">
     <h2 class="text-4xl md:text-5xl font-extrabold text-blue-400">Welcome to Shop</h2>
     <p class="mt-4 text-lg text-gray-300">Find the best products at unbeatable prices</p>
@@ -32,7 +31,7 @@
     </button>
   </section>
 
-  <!-- Product Listing -->
+
   <section id="products" class="p-8">
     <h3 class="text-2xl font-semibold mb-6 text-blue-300">Featured Products</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -49,21 +48,21 @@
     </div>
   </section>
 
-  <!-- Footer -->
+
   <footer class="bg-gray-800 text-center p-6 mt-12">
     <p class="text-gray-400">&copy; {{ date('Y') }} Shop. All rights reserved.</p>
   </footer>
 
-  <!-- Auth Modal (Login + Register + Forgot Password) -->
+
   <div x-show="showAuth" 
        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
        x-transition>
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl flex overflow-hidden relative">
 
-      <!-- Close Button -->
+
       <button @click="showAuth = false" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl">&times;</button>
 
-      <!-- Left Side -->
+
       <div class="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white p-10">
         <template x-if="authMode === 'login'">
           <div>
@@ -88,10 +87,9 @@
         </template>
       </div>
 
-      <!-- Right Side -->
       <div class="w-full md:w-1/2 p-8">
         
-        <!-- Login Form -->
+
         <div x-show="authMode === 'login'">
           <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Login to Shop</h2>
 
@@ -117,7 +115,7 @@
                      text-gray-900 bg-white">
             </div>
 
-            <!-- Forgot password link -->
+
             <div class="text-right">
               <button type="button" @click="authMode = 'forgot'" class="text-sm text-indigo-600 hover:underline">
                 Forgot password?
@@ -136,7 +134,7 @@
           </form>
         </div>
 
-        <!-- Register Form -->
+
         <div x-show="authMode === 'register'">
           <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Register to Shop</h2>
 
@@ -191,7 +189,6 @@
           </form>
         </div>
 
-        <!-- Forgot Password Form -->
         <div x-show="authMode === 'forgot'">
           <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Forgot Password</h2>
 

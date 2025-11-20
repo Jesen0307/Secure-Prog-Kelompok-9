@@ -9,24 +9,21 @@
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-<!-- Navbar -->
 <nav class="bg-gray-800 shadow-lg p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-400">Your Cart</h1>
 
     <div class="flex gap-3 items-center">
-        <!-- Back to Dashboard -->
+
         <a href="{{ route('dashboard.home') }}" 
            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition">
            ← Back
         </a>
 
-        <!-- Login as Merchant -->
         <a href="{{ route('merchant.login') }}"
            class="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium transition">
           Login as Merchant
         </a>
 
-        <!-- Cart Icon Dropdown -->
         <div class="relative" x-data="{ open: false }" @mouseleave="open = false">
             <button @click="open = !open" class="relative px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium transition flex items-center gap-2">
                 🛒 Cart ({{ auth()->user()->cart?->items->count() ?? 0 }})
@@ -67,7 +64,7 @@
             </div>
         </div>
 
-        <!-- Logout -->
+
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit"
@@ -78,7 +75,7 @@
     </div>
 </nav>
 
-<!-- Cart Content -->
+
 <section class="max-w-5xl mx-auto mt-10 bg-gray-800 p-6 rounded-lg shadow-lg">
     @if($cart && $cart->items->count() > 0)
       <table class="w-full text-left border-collapse">
@@ -130,17 +127,18 @@
       </div>
 
       <div class="flex justify-end mt-4">
-        <button class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition">
-          Proceed to Checkout
-        </button>
+        <form action="{{ route('checkout') }}" method="POST" onsubmit="return confirm('Proceed with checkout?');">
+          @csrf
+          <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition">
+            Proceed to Checkout
+          </button>
+        </form>
       </div>
-
     @else
       <p class="text-center text-gray-400 text-lg">Your cart is empty 🛒</p>
     @endif
 </section>
 
-<!-- Footer -->
 <footer class="text-center text-gray-400 py-6 mt-10 border-t border-gray-800">
     &copy; {{ date('Y') }} Shop. All rights reserved.
 </footer>

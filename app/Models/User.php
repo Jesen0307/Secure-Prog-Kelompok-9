@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'wallet_balance'
     ];
 
     /**
@@ -46,4 +47,11 @@ class User extends Authenticatable
     {
     return $this->hasOne(Cart::class);
     }
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo 
+            ? asset('storage/' . $this->profile_photo)
+            : 'https://via.placeholder.com/150';
+    }
+
 }

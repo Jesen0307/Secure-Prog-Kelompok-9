@@ -9,19 +9,17 @@
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-<!-- Navbar -->
 <nav class="bg-gray-800 p-4 shadow-md flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-400">Product Detail</h1>
     
     <div class="flex items-center gap-3">
 
-      <!-- Back to Dashboard -->
+
       <a href="{{ route('dashboard.home') }}" 
          class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition">
          ← Back
       </a>
 
-      <!-- Cart Icon Dropdown -->
       <div class="relative" x-data="{ open: false }" @mouseleave="open = false">
           <button @click="open = !open" 
                   class="relative px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium transition flex items-center gap-2">
@@ -66,10 +64,9 @@
     </div>
 </nav>
 
-<!-- Product Detail Section -->
 <section class="max-w-4xl mx-auto mt-10 bg-gray-800 p-6 rounded-lg shadow-lg">
     <div class="flex flex-col md:flex-row gap-6">
-      <!-- Product Image -->
+
       <div class="flex-shrink-0">
         @if($product->image)
           <img src="{{ asset('storage/' . e($product->image)) }}" 
@@ -82,7 +79,7 @@
         @endif
       </div>
 
-      <!-- Product Info -->
+
       <div class="flex-1">
         <h2 class="text-3xl font-bold text-blue-300 mb-2">{{ e($product->name) }}</h2>
         <p class="text-gray-400 mb-4">{{ e($product->description ?? 'No description available.') }}</p>
@@ -95,7 +92,7 @@
         <p class="text-gray-300 mb-1"><strong>Stock:</strong> {{ $product->stock }}</p>
         <p class="text-gray-300 mb-4"><strong>Merchant:</strong> {{ e(optional($product->merchant)->name ?? 'Unknown') }}</p>
 
-        <!-- Add to Cart Button -->
+
         <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-full md:w-auto">
           @csrf
           <button type="submit" 
@@ -108,7 +105,7 @@
     </div>
 </section>
 
-<!-- Footer -->
+
 <footer class="text-center text-gray-400 py-6 mt-10 border-t border-gray-800">
     &copy; {{ date('Y') }} Shop. All rights reserved.
 </footer>

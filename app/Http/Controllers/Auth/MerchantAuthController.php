@@ -62,21 +62,28 @@ class MerchantAuthController extends Controller
      * Merchant dashboard.
      */
     public function dashboard()
-{
-    if (Auth::guard('merchant')->check()) {
-        // Ambil data merchant yang sedang login
-        $merchant = Auth::guard('merchant')->user();
+    {
+        if (Auth::guard('merchant')->check()) {
+            // Ambil data merchant yang sedang login
+            $merchant = Auth::guard('merchant')->user();
 
-        // Ambil semua produk milik merchant tersebut
-        $products = Product::where('merchant_id', $merchant->id)->get();
+            // Ambil semua produk milik merchant tersebut
+            $products = \App\Models\Product::where('merchant_id', $merchant->id)->get();
 
-        // Kirim data ke view
-        return view('merchant.dashboard', compact('merchant', 'products'));
+            // Ambil semua order yang masuk ke merchant ini
+            $orders = \App\Models\Transaction::with(['buyer', 'items.product'])
+                ->where('merchant_id', $merchant->id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            // Kirim data ke view
+            return view('merchant.dashboard', compact('merchant', 'products', 'orders'));
+        }
+
+        // Jika belum login, redirect ke halaman login merchant
+        return redirect()->route('merchant.login');
     }
 
-    // Jika tidak login, redirect ke halaman login merchant
-    return redirect()->route('merchant.login');
-}
 
     public function showRegisterForm()
     {

@@ -34,4 +34,6 @@ class Product extends Model
     {
         return e($value);
     }
+
+
 }

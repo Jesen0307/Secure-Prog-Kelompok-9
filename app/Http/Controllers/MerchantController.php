@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\TransactionItem;
 use Illuminate\Support\Facades\Auth;
+
 
 class MerchantProductController extends Controller
 {
@@ -32,4 +34,33 @@ class MerchantProductController extends Controller
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }
+
+    public function index()
+    {
+        $merchant = Auth::user();
+        $products = Product::where('merchant_id', $merchant->id)->get();
+        $orders = TransactionItem::whereHas('product', function ($query) use ($merchant) {
+                $query->where('merchant_id', $merchant->id);
+            })
+            ->with(['product', 'transaction.user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $orders = $orders->map(function ($item) {
+            return (object)[
+                'id' => $item->transaction->id,
+                'user' => $item->transaction->user,
+                'product' => $item->product,
+                'quantity' => $item->quantity,
+                'total_price' => $item->subtotal,
+                'status' => $item->transaction->status,
+                'created_at' => $item->created_at,
+            ];
+        });
+
+        return view('merchant.dashboard', compact('merchant', 'products', 'orders'));
+    }
+
+
+
 }

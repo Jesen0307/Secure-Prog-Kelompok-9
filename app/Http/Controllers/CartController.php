@@ -52,20 +52,29 @@ class CartController extends Controller
     public function update(Request $request, $itemId)
     {
         $cartItem = CartItem::findOrFail($itemId);
-        if($cartItem->cart->user_id !== Auth::id()){
+
+        if ($cartItem->cart->user_id !== Auth::id()) {
             abort(403);
         }
 
-        $quantity = max(1, (int)$request->input('quantity', 1));
-        if($quantity > $cartItem->product->stock){
-            $quantity = $cartItem->product->stock;
+        $quantity = (int)$request->input('quantity', 1);
+
+        if ($quantity < 1) {
+            return redirect()->back()->with('error', 'Quantity tidak boleh kurang dari 1.');
+        }
+
+        $product = $cartItem->product->fresh();
+
+        if ($quantity > $product->stock) {
+            return redirect()->back()->with('error', "Stok produk '{$product->name}' tidak mencukupi. Maksimal: {$product->stock}.");
         }
 
         $cartItem->quantity = $quantity;
         $cartItem->save();
 
-        return redirect()->back()->with('success', 'Cart updated!');
+        return redirect()->back()->with('success', 'Keranjang berhasil diperbarui!');
     }
+
 
     public function remove($itemId)
     {

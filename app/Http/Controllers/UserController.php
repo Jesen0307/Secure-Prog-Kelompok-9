@@ -14,7 +14,6 @@ use App\Models\Product;
 
 class UserController extends Controller
 {
-    // ================= LOGIN =================
     public function login(Request $request)
     {
         $incomingFields = $request->validate([
@@ -38,7 +37,6 @@ class UserController extends Controller
             ->withInput();
     }
 
-    // ================= FORGOT PASSWORD =================
     public function showForgotPasswordForm()
     {
         return view('auth.forgot-password');
@@ -57,7 +55,6 @@ class UserController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    // ================= RESET PASSWORD =================
     public function showResetForm($token)
     {
         return view('reset-password', ['token' => $token]);
@@ -90,9 +87,6 @@ class UserController extends Controller
             : back()->withErrors(['email' => [__($status)]]);
     }
 
-
-
-    // ================= REGISTER =================
     public function register(Request $request)
     {
         $incomingFields = $request->validate([
@@ -104,7 +98,8 @@ class UserController extends Controller
         $user = User::create([
             'name' => $incomingFields['name'],
             'email' => $incomingFields['email'],
-            'password' => Hash::make($incomingFields['password'])
+            'password' => Hash::make($incomingFields['password']),
+            'wallet_balance' => 1000,
         ]);
 
         Auth::login($user);
@@ -112,29 +107,28 @@ class UserController extends Controller
         return redirect()->route('dashboard.home');
     }
 
-    // ================= LOGOUT =================
+
     public function logout(Request $request)
     {
-        Auth::logout(); // log out user
-        $request->session()->invalidate(); // invalidate session
-        $request->session()->regenerateToken(); // regenerate CSRF token
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect()->route('home'); // back to homepage
+        return redirect()->route('home');
     }
     public function dashboard()
     {
         if (Auth::check()) {
-            // Ambil data user yang sedang login
             $user = Auth::user();
 
-            // Ambil semua produk yang tersedia
-            $products = Product::all();
+            $products = Product::where('stock', '>=', 1)
+                ->where('is_active', true)
+                ->get();
 
-            // Kirim data ke view
             return view('dashboard', compact('user', 'products'));
         }
 
-        // Kalau belum login, arahkan ke halaman login
         return redirect()->route('login')->with('error', 'Please login first.');
     }
+
 }

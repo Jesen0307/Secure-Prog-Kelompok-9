@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('merchants', function (Blueprint $table) {
-        $table->id(); // BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+        $table->id();
         $table->string('name');
         $table->string('email')->unique();
         $table->string('password');

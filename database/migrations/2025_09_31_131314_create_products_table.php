@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            // Relasi aman ke merchant (hapus otomatis jika merchant dihapus)
             $table->foreignId('merchant_id')
                 ->constrained('merchants')
                 ->onDelete('cascade')
